@@ -6,7 +6,7 @@
   * For more info and help: https://bootstrapmade.com/php-email-form/
   */
 
-  $receiving_email_address = 'gerardoalonso.martinezmonge@gmail.com';
+  $receiving_email_address = '';
 
   if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
     include( $php_email_form );
@@ -26,8 +26,8 @@
   
   $contact->smtp = array(
     'host' => 'smtp.gmail.com',
-    'username' => 'cuadraciclo18@gmail.com',
-    'password' => 'dysz lijd dzyy ijri',
+    'username' => '',
+    'password' => '',
     'port' => '587'
   );
   

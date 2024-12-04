@@ -203,3 +203,60 @@
 
 })();
 
+
+
+const btn = document.getElementById('button');
+const form = document.getElementById('form');
+const alertContainer = document.getElementById('alert-container');
+
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  // Cambiar el estado del botón a "Enviando"
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...`;
+
+  const serviceID = 'default_service';
+  const templateID = 'template_l09speo';
+
+  // Crear un objeto con los datos del formulario y añadir 'to_name'
+  const formData = new FormData(form);
+  const formObject = Object.fromEntries(formData);
+  formObject.to_name = 'Gerardo'; 
+
+
+  // Enviar el formulario con EmailJS
+  emailjs.send(serviceID, templateID, formObject,   )
+    .then(() => {
+      showAlert('Your email has been sent successfully!', 'success');
+      form.reset(); // Reinicia el formulario
+      resetButton(); // Restablecer el botón
+    })
+    .catch((err) => {
+      showAlert(`An error occurred: ${JSON.stringify(err)}`, 'danger');
+      resetButton(); // Restablecer el botón
+    });
+});
+
+// Función para restablecer el botón
+function resetButton() {
+  btn.disabled = false;
+  btn.innerHTML = 'Send Email';
+}
+
+// Función para mostrar alertas con Bootstrap
+function showAlert(message, type) {
+  const alertHTML = `
+    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  `;
+  alertContainer.innerHTML = alertHTML;
+
+  // Remover alerta automáticamente después de 5 segundos
+  setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) alert.remove();
+  }, 5000);
+}
