@@ -8,6 +8,7 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
+  
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -139,35 +140,30 @@
 
         </div>
 
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
+        <form id="contact-form">
           <div class="row gy-4">
-
             <div class="col-md-6">
               <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
             </div>
-
-            <div class="col-md-6 ">
+        
+            <div class="col-md-6">
               <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
             </div>
-
+        
             <div class="col-md-12">
               <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
             </div>
-
+        
             <div class="col-md-12">
               <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
             </div>
-
+        
             <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-
-              <button type="submit">Send Message</button>
+              <button type="button" id="send-button" class="btn btn-primary">Send Message</button>
             </div>
-
           </div>
-        </form><!-- End Contact Form -->
+        </form>
+        <!-- End Contact Form -->
 
       </div>
 
@@ -213,8 +209,46 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    (function() {
+      emailjs.init("LZ_O4_-h0b0iqjRda");
+    })();
+  </script>
+
+
+<script>
+document.getElementById('send-button').addEventListener('click', function() {
+  // Capturar los datos del formulario
+  const form = document.getElementById('contact-form');
+  const formData = {
+    from_name: form.name.value,       // Nombre del remitente
+    from_email: form.email.value,     // Correo electrónico del remitente
+    subject: form.subject.value,      // Asunto
+    message: form.message.value,      // Mensaje
+    to_name: 'Gerardo Martínez',      // Nombre del destinatario (puedes cambiarlo o hacerlo dinámico)
+  };
+
+  // Enviar los datos usando Email.js
+  emailjs.send("service_yul27g4", "template_l09speo", formData)
+    .then(function(response) {
+      alert("Message sent successfully!");
+      form.reset();
+    }, function(error) {
+      alert("Failed to send the message. Please try again later.");
+      console.error(error);
+    });
+});
+
+</script>
+
+
 
 </body>
 
